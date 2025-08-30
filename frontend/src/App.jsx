@@ -10,9 +10,9 @@ function App() {
   const { setAuth, appLoading, setAppLoading } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchAccount = async () => {
+    (async () => {
       setAppLoading(true);
-      
+
       const res = await axios.get("/api/user");
       if (res && !res.message) {
         setAuth({
@@ -24,9 +24,7 @@ function App() {
         });
       }
       setAppLoading(false);
-    };
-
-    fetchAccount();
+    })();
   }, []);
 
   return (

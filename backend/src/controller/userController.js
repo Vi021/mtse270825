@@ -5,6 +5,10 @@ const createUser = async (req, res) => {
     const { name, email, password } = req.body;    
     const user = await createUserService(name, email, password);
 
+    if (!user) {
+        return res.status(400).json({ message: "User creation failed" });
+    }
+
     return res.status(200).json(user);
 };
 

@@ -9,15 +9,22 @@ const createUserService = async (name, email, password) => {
         const user = await User.findOne({ email });
         if (user) {
             console.log("User already exists");
-            return null;
+            return {
+                EC: 1,
+                EN: "User already exists"
+            };
         }
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         let result = await User.create({ name, email, password: hashedPassword, role: "user" });
+        
         return result;
     } catch (error) {
         console.log("Error creating user:", error);
-        return null;
+        return {
+            EC: 2,
+            EN: "User creation failed"
+        };
     }
 };
 

@@ -47,8 +47,7 @@ const LoginPage = () => {
                 }}>
                     <legend style={{ fontWeight: 'bold' }}>Login</legend>
                     <Form name="basic" onFinish={onFinish}  autoComplete="off" layout="vertical">
-                        <Form.Item
-                            name="email"
+                        <Form.Item label="Email" name="email"
                             rules={[
                                 { 
                                     required: true, 
@@ -61,8 +60,7 @@ const LoginPage = () => {
                             ]}>
                             <Input placeholder="Email" />
                         </Form.Item>
-                        <Form.Item
-                            name="password"
+                        <Form.Item label="Password" name="password"
                             rules={[
                                 { 
                                     required: true, 

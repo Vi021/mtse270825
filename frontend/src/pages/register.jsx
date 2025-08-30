@@ -35,7 +35,7 @@ const RegisterPage = () => {
                 }}>
                     <legend style={{ fontWeight: 'bold' }}>Register</legend>
                     <Form name="basic" onFinish={onFinish} autoComplete="off" layout="vertical">
-                        <Form.Item label="Email" name="Email" 
+                        <Form.Item label="Email" name="email" 
                             rules={[
                                 {
                                     required: true,
@@ -67,7 +67,7 @@ const RegisterPage = () => {
                             <Input.Password placeholder='Password'/>
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">
+                            <Button type="primary" htmlType="submit" block>
                                 Register
                             </Button>
                         </Form.Item>
