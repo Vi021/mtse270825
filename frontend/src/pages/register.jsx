@@ -1,0 +1,86 @@
+import React from 'react';
+import { Button, Col, Divider, Form, Input, notification, Row } from 'antd';
+import  { createUserApi } from '../utils/api';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowLeftOutlined } from '@ant-design/icons';
+
+const RegisterPage = () => {
+    const navigate = useNavigate();
+
+    const onFinish = async (values) => {
+        const { name, email, password } = values;
+    
+        const res = await createUserApi(name, email, password);
+        if (res) {
+            notification.success({
+                message: "Registration successful",
+                description: "You can now log in.",
+            });
+            navigate("/login");
+        } else {
+            notification.error({
+                message: "Registration failed",
+                description: "Please try again.",
+            });
+        }
+    };
+
+    return (
+        <Row justify={"center"} style={{ minHeight: '100vh', marginTop: '30px' }}>
+            <Col xs={24} md={16} lg={8}>
+                <fieldset style={{
+                    padding: '15px',
+                    border: '1px solid #ccc',
+                    borderRadius: '5px',
+                }}>
+                    <legend style={{ fontWeight: 'bold' }}>Register</legend>
+                    <Form name="basic" onFinish={onFinish} autoComplete="off" layout="vertical">
+                        <Form.Item label="Email" name="Email" 
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your email!',
+                                },
+                                {
+                                    type: 'email',
+                                    message: 'Please enter a valid email!',
+                                },
+                            ]}>
+                            <Input placeholder='Email'/>
+                        </Form.Item>
+                        <Form.Item label="Name" name="name"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your name!',
+                                },
+                            ]}>
+                            <Input placeholder='Name'/>
+                        </Form.Item>
+                        <Form.Item label="Password" name="password"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your password!',
+                                },
+                            ]}>
+                            <Input.Password placeholder='Password'/>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit">
+                                Register
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                    <Link to={"/"}><ArrowLeftOutlined /> Back to Home</Link>
+                    <Divider />
+                    <div style={{ textAlign: 'center' }}>
+                        Already have an account? <Link to={"/login"}>Log in</Link>
+                    </div>
+                </fieldset>
+            </Col>    
+        </Row>
+    )
+};
+
+export default RegisterPage;
