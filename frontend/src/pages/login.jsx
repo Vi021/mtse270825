@@ -13,7 +13,7 @@ const LoginPage = () => {
         const { email, password } = values;
 
         const res = await loginApi(email, password);
-        if (res && res.EC === 0) {
+        if (res && res.data.EC === 0) {
             localStorage.setItem("token", res.access_token);
 
             notification.success({
@@ -28,11 +28,12 @@ const LoginPage = () => {
                     name: res?.user?.name ?? "",
                 }
             });
+
             navigate("/");
         } else {
             notification.error({
                 message: "Login failed",
-                description: res && res.EM ? res.EM : "Unknown error",
+                description: res && res.data.EM ? res.data.EM : "Unknown error",
             });
         }
     };
