@@ -21,17 +21,40 @@ const getUserApi = () => {
     return axios.get(URL_API);
 };
 
-const getProductApi = (page, limit) => {
+const getProductApi = (offset, limit, filters = {}) => {
     const URL_API = `/api/products`;
-
     return axios.get(URL_API, {
-        params: { page, limit }
+        params: { offset, limit, ...filters }
     });
+};
+
+const getProductById = (id) => {
+    const URL_API = `/api/products/${id}`;
+    return axios.get(URL_API);
+};
+
+const addProduct = (data) => {
+    const URL_API = `/api/products/add`;
+    return axios.post(URL_API, data);
+};
+
+const updateProduct = (id, data) => {
+    const URL_API = `/api/products/update/${id}`;
+    return axios.put(URL_API, data);
+};
+
+const deleteProduct = (id) => {
+    const URL_API = `/api/products/remove/${id}`;
+    return axios.delete(URL_API);
 };
 
 export {
     createUserApi,
     loginApi,
     getUserApi,
-    getProductApi
+    getProductApi,
+    getProductById,
+    addProduct,
+    updateProduct,
+    deleteProduct
 };

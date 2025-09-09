@@ -1,7 +1,8 @@
 const express = require('express');
-const { createUser, handleLogin, getUser, getAccount } = require('../controller/userController');
 const auth = require("../middleware/auth");
 const delay = require('../middleware/delay');
+const { createUser, handleLogin, getUser, getAccount } = require('../controller/userController');
+const { getProducts, getProductById, createProduct, updateProduct, deleteProduct } = require('../controller/productController');
 
 const routerAPI = express.Router();
 
@@ -17,20 +18,10 @@ routerAPI.get('/user', getUser);
 routerAPI.get('/account', delay, getAccount);
 
 
-// fake data
-const products = Array.from({ length: 200 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}` }));
-routerAPI.get('/products', (req, res) => {
-    let page = parseInt(req.query.page) || 1;
-    let limit = parseInt(req.query.limit) || 10;
-    let start = (page - 1) * limit;
-    let end = start + limit;
-    
-    res.status(200).json({
-        page,
-        limit,
-        total: products.length,
-        data: products.slice(start, end)
-    });
-});
+routerAPI.get("/products", getProducts);        // lazy loading + filters
+routerAPI.get("/products/:id", getProductById);
+routerAPI.post("/products/add", createProduct);
+routerAPI.put("/products/update/:id", updateProduct);
+routerAPI.delete("/products/remove/:id", deleteProduct);
 
 module.exports = routerAPI;
