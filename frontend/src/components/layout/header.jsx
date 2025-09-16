@@ -22,14 +22,14 @@ const Header = () => {
             icon: <ProductOutlined />,
         }] : []),
         {
-            label: `Welcome ${auth?.user?.email ?? "Guest"}`,
+            label: `Welcome ${auth?.user?.name ?? "Guest"}`,
             key: "Submenu",
             icon: <SettingOutlined />,
             children: [
                 ...(auth.isAuthenticated ? [
                     {
                         label: <span onClick={() => {
-                            localStorage.clear("access_token");
+                            localStorage.clear("token");
                             setCurrent('home');
                             setAuth({
                                 isAuthenticated: false,

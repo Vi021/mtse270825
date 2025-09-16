@@ -18,7 +18,7 @@ const auth = (req, res, next) => {
                 name: decoded.name
             };
             console.log(">>>token: " + decoded);
-            next();
+            return next();
         } catch (error) {
             return res.status(401).json({ message: "Token: INVALID" });
         }

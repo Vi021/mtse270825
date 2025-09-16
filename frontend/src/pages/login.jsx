@@ -14,7 +14,7 @@ const LoginPage = () => {
 
         const res = await loginApi(email, password);
         if (res && res.data.EC === 0) {
-            localStorage.setItem("token", res.access_token);
+            localStorage.setItem("token", res.data.token);
 
             notification.success({
                 message: "Login successful",

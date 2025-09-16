@@ -11,19 +11,29 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      setAppLoading(true);
+      try {
+        setAppLoading(true);
 
-      const res = await axios.get("/api/user");
-      if (res && !res.message) {
-        setAuth({
-          isAuthenticated: true,
-          user: {
-            email: res.email,
-            name: res.name
-          }
+        const token = localStorage.getItem("token");
+        const res = await axios.get("/api/account", {
+          headers: { Authorization: `Bearer ${token}` }
         });
+
+        if (res.data) {
+          setAuth({
+            isAuthenticated: true,
+            user: {
+              email: res.data.email,
+              name: res.data.name
+            }
+          });
+        }
+      } catch (err) {
+        console.error("Auth check failed:", err);
+        localStorage.removeItem("token"); // optional cleanup
+      } finally {
+        setAppLoading(false);s
       }
-      setAppLoading(false);
     })();
   }, []);
 
