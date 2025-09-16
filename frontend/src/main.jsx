@@ -13,11 +13,17 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
+        // so that App (with Header + context consumer) never unmounts
+        //  & auth state doesn’t reset when changing pages
         children: [
           {
             index: true,
             element: <HomePage />
-          }
+            },
+            {   
+                path: "/products",
+                element: <ProductPage />,
+            }
         ]
     },
     {
@@ -27,10 +33,6 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <LoginPage />,
-    },
-    {
-        path: "/products",
-        element: <ProductPage />,
     }
 ]);
 

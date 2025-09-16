@@ -84,10 +84,40 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+
+const getSimilarProducts = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const baseProduct = await Product.findById(id);
+
+    if (!baseProduct) {
+      return res.status(404).json({ success: false, message: "Product not found" });
+    }
+
+    // find same category, exclude base product
+    const similar = await Product.find({
+      _id: { $ne: baseProduct._id },
+      category: baseProduct.category,
+    });
+
+    // similar name with fuse.js
+    const fuse = new Fuse(similar, {
+      keys: ["name"],
+      threshold: 0.5, // similarity sensitivity
+    });
+    const results = fuse.search(baseProduct.name);
+
+    res.json({ success: true, data: results.slice(0, 5).map(r => r.item) });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error fetching similar products", error });
+  }
+};
+
 module.exports = {
   getProducts,
   getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
+  getSimilarProducts
 };

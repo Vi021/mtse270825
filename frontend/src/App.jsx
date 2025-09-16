@@ -14,11 +14,7 @@ function App() {
       try {
         setAppLoading(true);
 
-        const token = localStorage.getItem("token");
-        const res = await axios.get("/api/account", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-
+        const res = await axios.get("/api/account");
         if (res.data) {
           setAuth({
             isAuthenticated: true,
@@ -32,7 +28,7 @@ function App() {
         console.error("Auth check failed:", err);
         localStorage.removeItem("token"); // optional cleanup
       } finally {
-        setAppLoading(false);s
+        setAppLoading(false);
       }
     })();
   }, []);

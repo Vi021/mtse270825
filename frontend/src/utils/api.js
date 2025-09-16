@@ -21,6 +21,11 @@ const getUserApi = () => {
     return axios.get(URL_API);
 };
 
+const getUsers = () => {
+    const URL_API = `/api/users`;
+    return axios.get(URL_API);
+};
+
 const getProductApi = (offset, limit, filters = {}) => {
     const URL_API = `/api/products`;
     return axios.get(URL_API, {
@@ -48,6 +53,36 @@ const deleteProduct = (id) => {
     return axios.delete(URL_API);
 };
 
+const addToFavorites = (email, productId) => {
+    const URL_API = `/api/user/${email}/favorites/${productId}`;
+    return axios.post(URL_API);
+}
+
+const removeFromFavorites = (email, productId) => {
+    const URL_API = `/api/user/${email}/favorites/${productId}`;
+    return axios.delete(URL_API);
+}
+
+const getAllFavorites = (email) => {
+    const URL_API = `/api/user/${email}/favorites`;
+    return axios.get(URL_API);
+}
+
+const getViewedProducts = (email) => {
+    const URL_API = `/api/user/${email}/viewed`;
+    return axios.get(URL_API);
+}
+
+const markProductViewed = (email, productId) => {
+    const URL_API = `/api/user/${email}/viewed/${productId}`;
+    return axios.post(URL_API);
+}
+
+const getSimilarProducts = (productId) => {
+    const URL_API = `/api/products/similar/${productId}`;
+    return axios.get(URL_API);
+};
+
 export {
     createUserApi,
     loginApi,
@@ -56,5 +91,12 @@ export {
     getProductById,
     addProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getUsers,
+    addToFavorites,
+    removeFromFavorites,
+    getAllFavorites,
+    getViewedProducts,
+    markProductViewed,
+    getSimilarProducts
 };

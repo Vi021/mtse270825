@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 
 const auth = (req, res, next) => {
-    const white_lists = ["/", "/register", "/login", "/user", "/products"];
+    const white_lists = ["/", "/register", "/login"];
     if (white_lists.includes(req.path)) {
         return next();
     }
